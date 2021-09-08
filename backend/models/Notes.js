@@ -3,19 +3,20 @@ const { Schema } = mongoose;
 
 const NoteSchema = new Schema({
     title: {
-        type: string,
-        require: true
+        type: String,
+        required: true
     },
     description: {
-        type: string,
-        require: true  
+        type: String,
+        required: true
     },
     tag: {
-        type: String
+        type: String,
+        default: "Genral"
     },
     date: {
         type: Date,
-        defaulat: Date.now
+        default: Date.now
     },
 });
 module.export = mongoose.model('notes', NotesSchema);
