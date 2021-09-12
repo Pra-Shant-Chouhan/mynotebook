@@ -18,7 +18,7 @@ const NoteState = (props) => {
       },
     });
     const json = await response.json(); // parses JSON response into native JavaScript objects
-    console.log(json)
+    
     setNotes(json)
 
   }
@@ -38,18 +38,9 @@ const NoteState = (props) => {
 
       body: JSON.stringify({ title, description, tag }) // body data type must match "Content-Type" header
     });
-    const json = response.json(); // parses JSON response into native JavaScript objects
-
-    const note = {
-      "_id": "613af8bfd72640655d4dfff0",
-      "user": "6138b0f04c9b3177f90b55d5",
-      "title": title,
-      "description": description,
-      "tag": tag,
-      "date": "2021-09-10T06:18:39.577Z",
-      "__v": 0
-    }
+    const note = await response.json(); // parses JSON response into native JavaScript objects
     setNotes(notes.concat(note))
+   
 
   }
 
@@ -66,17 +57,15 @@ const NoteState = (props) => {
 
     });
     const json = response.json(); // parses JSON response into native JavaScript objects
-    console.log(json)
-    console.log("Deleteing note with id " + id)
     const newNotes = notes.filter((notes) => { return notes._id !== id })
     setNotes(newNotes)
   }
 
   //Edit a Note
-  const editNotes = async (id, title, tag, description) => {
+  const editNote = async (id, title, tag, description) => {
     // Api Call
     const response = await fetch(`${host}/api/notes/updatenote/${id}`, {
-      method: 'POST', // *GET, POST, PUT, DELETE, etc.
+      method: 'PUT', // *GET, POST, PUT, DELETE, etc.
 
       headers: {
         'Content-Type': 'application/json', // 'Content-Type': 'application/x-www-form-urlencoded',
@@ -85,25 +74,28 @@ const NoteState = (props) => {
 
       body: JSON.stringify({ title, description, tag }) // body data type must match "Content-Type" header
     });
-    const json = response.json(); // parses JSON response into native JavaScript objects
+    const json =await response.json(); // parses JSON response into native JavaScript objects
+
+    let newNotes =JSON.parse(JSON.stringify(notes))
 
     //Logic to edit in client
     for (let index = 0; index < notes.length; index++) {
       const element = notes[index];
       if (element._id === id) {
-        element.title = title;
-        element.tag = tag;
-        element.description = description;
+        newNotes[index].title = title;
+        newNotes[index].tag = tag;
+        newNotes[index].description = description;
+        break;
       }
-
     }
+    setNotes(newNotes)
 
   }
 
 
 
   return (
-    <NoteContext.Provider value={{ notes, addNote, deleteNote, editNotes, getNotes }}>
+    <NoteContext.Provider value={{ notes, addNote, deleteNote, editNote, getNotes }}>
       {props.children}
     </NoteContext.Provider>
   )
