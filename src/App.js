@@ -11,8 +11,18 @@ import NoteState from './context/notes/NoteState';
 import Alert from './component/Alert';
 import Login from './component/Login';
 import Signup from './component/Signup';
-
+import { useState } from 'react';
 function App() {
+  const [alert, setAlert] = useState(null);
+  const showAlert = (massage, type) => {
+    setAlert({
+      msg: massage,
+      type: type
+    })
+    setTimeout(() => {
+      setAlert(null)
+    }, 2000)
+  }
   return (
     <>
       <NoteState>
@@ -20,21 +30,21 @@ function App() {
         <Router>
 
           <Navbar />
-          <Alert message = "This is My-NoteBook Alert"/>
+          <Alert alert={alert} />
           <div className="container">
 
             <Switch>
               <Route exact path="/">
-                <Home />
+                <Home showAlert ={showAlert} />
               </Route>
               <Route exact path="/about">
                 <About />
               </Route>
               <Route exact path="/login">
-                <Login/>
+                <Login showAlert ={showAlert}/>
               </Route>
               <Route exact path="/signup">
-                <Signup/>
+                <Signup showAlert ={showAlert}/>
               </Route>
             </Switch>
 
