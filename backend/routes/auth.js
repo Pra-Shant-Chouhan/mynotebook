@@ -4,7 +4,7 @@ const router = express.Router();
 const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const fetchuser = require('../middleware/fetchuser')
+const fetchuser = require('../middleware/fetchuser');
 
 const JWT_SECRET = "Bitt2isAwasomProgramerAndgetJob";
 
@@ -58,7 +58,7 @@ router.post('/createuser', [
 
         const authinticationData = jwt.sign(data, JWT_SECRET);
         // console.log(authinticationData)
-
+        
         // res.json(user)
         res.json({ authinticationData })
 
@@ -85,6 +85,7 @@ router.post('/login', [
 
 
 ], async (req, res) => {
+    let success = false;
     // Finds the validation errors in this request and wraps them in an object with handy functions
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -99,7 +100,8 @@ router.post('/login', [
         }
         const passwordCompare = await bcrypt.compare(password, user.password)
         if (!passwordCompare) {
-            return res.status(400).json({ error: "plese try to login with correct  credentials" })
+            success = false;
+            return res.status(400).json({success, error: "plese try to login with correct  credentials" })
         }
         const data = {
             user: {
@@ -108,8 +110,8 @@ router.post('/login', [
         }
 
         const authinticationData = jwt.sign(data, JWT_SECRET);
-
-        res.json({ authinticationData })
+        success = true;
+        res.json({ success,authinticationData })
     } catch (error) {
         console.log(error.message)
         res.status(500).send("Internal Server Error occured");
