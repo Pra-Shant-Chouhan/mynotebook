@@ -22,10 +22,11 @@ router.post('/createuser', [
     body('password', "password Must be atleast five letters").isLength({ min: 5 })
 
 ], async (req, res) => {
+    let success = false;
     // Finds the validation errors in this request and wraps them in an object with handy functions
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
+        return res.status(400).json({ success, errors: errors.array() });
     }
 
     //Cheak whether the user with this email exists already
@@ -35,7 +36,7 @@ router.post('/createuser', [
 
         let user = await User.findOne({ email: req.body.email })
         if (user) {
-            return res.status(400).json({ errors: "Sorry the email already exits" })
+            return res.status(400).json({success, errors: "Sorry the email already exits" })
 
         }
         //Store hash in your password DB.
@@ -60,7 +61,8 @@ router.post('/createuser', [
         // console.log(authinticationData)
 
         // res.json(user)
-        res.json({ authinticationData })
+        success = true;
+        res.json({success, authinticationData })
 
 
     } catch (error) {
