@@ -14,7 +14,7 @@ const NoteState = (props) => {
 
       headers: {
         'Content-Type': 'application/json', // 'Content-Type': 'application/x-www-form-urlencoded',
-        'auth-token': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjEzOGIwZjA0YzliMzE3N2Y5MGI1NWQ1In0sImlhdCI6MTYzMTE4NjEyNH0.Qa8GnkHZULNGRdkMVH65GYwbLohL2hvvj-BtYTNSY-I"
+        'auth-token': localStorage.getItem('token')
       },
     });
     const json = await response.json(); // parses JSON response into native JavaScript objects
@@ -33,7 +33,7 @@ const NoteState = (props) => {
 
       headers: {
         'Content-Type': 'application/json', // 'Content-Type': 'application/x-www-form-urlencoded',
-        'auth-token': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjEzOGIwZjA0YzliMzE3N2Y5MGI1NWQ1In0sImlhdCI6MTYzMTE4NjEyNH0.Qa8GnkHZULNGRdkMVH65GYwbLohL2hvvj-BtYTNSY-I"
+        'auth-token': localStorage.getItem('token')
       },
 
       body: JSON.stringify({ title, description, tag }) // body data type must match "Content-Type" header
@@ -52,10 +52,11 @@ const NoteState = (props) => {
 
       headers: {
         'Content-Type': 'application/json', // 'Content-Type': 'application/x-www-form-urlencoded',
-        'auth-token': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjEzOGIwZjA0YzliMzE3N2Y5MGI1NWQ1In0sImlhdCI6MTYzMTE4NjEyNH0.Qa8GnkHZULNGRdkMVH65GYwbLohL2hvvj-BtYTNSY-I"
+        'auth-token': localStorage.getItem('token')
       },
 
     });
+    // eslint-disable-next-line 
     const json = response.json(); // parses JSON response into native JavaScript objects
     const newNotes = notes.filter((notes) => { return notes._id !== id })
     setNotes(newNotes)
@@ -69,12 +70,13 @@ const NoteState = (props) => {
 
       headers: {
         'Content-Type': 'application/json', // 'Content-Type': 'application/x-www-form-urlencoded',
-        'auth-token': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjEzOGIwZjA0YzliMzE3N2Y5MGI1NWQ1In0sImlhdCI6MTYzMTE4NjEyNH0.Qa8GnkHZULNGRdkMVH65GYwbLohL2hvvj-BtYTNSY-I"
+        'auth-token': localStorage.getItem('token')
       },
 
       body: JSON.stringify({ title, description, tag }) // body data type must match "Content-Type" header
     });
-    const json =await response.json(); // parses JSON response into native JavaScript objects
+    const json = await response.json(); // parses JSON response into native JavaScript objects
+    console.log(json);
 
     let newNotes =JSON.parse(JSON.stringify(notes))
 

@@ -35,7 +35,8 @@ const onChange = (e) => {
 }
 
     return (
-        <div className="container">
+        <div className="container mt-4">
+            <h2> Crate a Account to use My-NoteBook</h2>
             <form onSubmit ={clickonSubmit}>
                 <div className="mb-3">
                     <label htmlFor="name" className="form-label">Enter Your Name</label>

@@ -57,12 +57,12 @@ router.post('/createuser', [
             }
         }
 
-        const authinticationData = jwt.sign(data, JWT_SECRET);
+        const authtoken= jwt.sign(data, JWT_SECRET);
         // console.log(authinticationData)
 
         // res.json(user)
         success = true;
-        res.json({success, authinticationData })
+        res.json({success, authtoken})
 
 
     } catch (error) {
@@ -111,9 +111,9 @@ router.post('/login', [
             }
         }
 
-        const authinticationData = jwt.sign(data, JWT_SECRET);
+        const authtoken= jwt.sign(data, JWT_SECRET);
         success = true;
-        res.json({ success, authinticationData })
+        res.json({ success, authtoken})
     } catch (error) {
         console.log(error.message)
         res.status(500).send("Internal Server Error occured");
