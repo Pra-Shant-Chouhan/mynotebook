@@ -2,6 +2,7 @@
 const connectToMongo = require('./db');
 const express = require('express')
 const cors = require('cors')
+require("dotenv").config();
  
 connectToMongo();
 const app = express()
@@ -16,6 +17,6 @@ app.use('/api/notes', require('./routes/notes'))
 
 
 
-app.listen(port, () => {
+app.listen(process.env.PORT||port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 })
