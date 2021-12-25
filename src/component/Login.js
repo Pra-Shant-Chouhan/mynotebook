@@ -5,7 +5,8 @@ const Login = (props) => {
     let history = useHistory();
     const clickonSubmit = async (e) => {
         e.preventDefault();
-        const response = await fetch("http://localhost:5000/api/auth/login", {
+        const response = await fetch("https://git.heroku.com/my-note-bookk.git/api/auth/login", {
+        // const response = await fetch("http://localhost:5000/api/auth/login", { 
             method: 'POST', // *GET, POST, PUT, DELETE, etc.
 
             headers: {
